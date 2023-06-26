@@ -15,6 +15,8 @@ const Login = () => {
   const [name, onChangeName] = React.useState("");
   const [password, onChangePassword] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleSignUp = () => {};
   return (
     <View style={styles.centeredView}>
       <Modal
