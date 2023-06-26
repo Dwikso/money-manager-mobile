@@ -1,3 +1,4 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
   Alert,
@@ -9,12 +10,30 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
+import { FIREBASE_AUTH } from "../../config/firebase";
 
 const Sign = () => {
-  const [text, onChangeText] = React.useState("");
+  const [email, onChangeEmail] = React.useState("");
   const [name, onChangeName] = React.useState("");
   const [password, onChangePassword] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
+  const login = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response);
+      alert("Connection Réussi");
+    } catch (error: any) {
+      console.log(error);
+      alert("Connection échouer " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -30,15 +49,9 @@ const Sign = () => {
           <View style={styles.modalView}>
             <TextInput
               style={styles.input}
-              placeholder="Name"
-              onChangeText={onChangeName}
-              value={name}
-            />
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeText}
+              onChangeText={onChangeEmail}
               placeholder="Address Email"
-              value={text}
+              value={email}
             />
 
             <TextInput
@@ -52,7 +65,9 @@ const Sign = () => {
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Confirm</Text>
+              <Text style={styles.textStyle} onPress={login}>
+                Confirm
+              </Text>
             </Pressable>
           </View>
         </View>

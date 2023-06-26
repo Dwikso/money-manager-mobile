@@ -1,3 +1,4 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
   Alert,
@@ -9,12 +10,33 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
+import { FIREBASE_AUTH } from "../../config/firebase";
 
 const Login = () => {
-  const [text, onChangeText] = React.useState("");
+  const [email, onChangeEmail] = React.useState("");
   const [name, onChangeName] = React.useState("");
   const [password, onChangePassword] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
+  const signUp = async () => {
+    setLoading(true);
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(response);
+      alert("Inscription Réussi");
+    } catch (error: any) {
+      console.log(error);
+      alert("Inscription échouer " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSignUp = () => {};
   return (
@@ -32,15 +54,9 @@ const Login = () => {
           <View style={styles.modalView}>
             <TextInput
               style={styles.input}
-              placeholder="Name"
-              onChangeText={onChangeName}
-              value={name}
-            />
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeText}
+              onChangeText={onChangeEmail}
               placeholder="Address Email"
-              value={text}
+              value={email}
             />
 
             <TextInput
@@ -54,7 +70,9 @@ const Login = () => {
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Confirm</Text>
+              <Text style={styles.textStyle} onPress={signUp}>
+                Confirm
+              </Text>
             </Pressable>
           </View>
         </View>
