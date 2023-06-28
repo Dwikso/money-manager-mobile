@@ -37,52 +37,20 @@ const Login = () => {
       setLoading(false);
     }
   };
-
-  const handleSignUp = () => {};
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeEmail}
-              placeholder="Address Email"
-              value={email}
-            />
+    <View>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeEmail}
+        value={email}
+        placeholder="Address Email"
+      />
 
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangePassword}
-              placeholder="Mot de passe"
-              value={password}
-            />
-
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle} onPress={signUp}>
-                Confirm
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Sign Up</Text>
-      </Pressable>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangePassword}
+        placeholder="Mot de passe"
+      />
     </View>
   );
 };
