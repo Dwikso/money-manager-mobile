@@ -1,18 +1,11 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  SafeAreaView,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { FIREBASE_AUTH } from "../../config/firebase";
+import Input from "../input";
+import { ScrollView } from "react-native-gesture-handler";
 
-const Login = () => {
+const Sign = () => {
   const [email, onChangeEmail] = React.useState("");
   const [name, onChangeName] = React.useState("");
   const [password, onChangePassword] = React.useState("");
@@ -20,7 +13,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
-  const signUp = async () => {
+  const inscription = async () => {
     setLoading(true);
     try {
       const response = await createUserWithEmailAndPassword(
@@ -38,23 +31,43 @@ const Login = () => {
     }
   };
   return (
-    <View>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeEmail}
-        value={email}
-        placeholder="Address Email"
-      />
-
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangePassword}
-        placeholder="Mot de passe"
-      />
-    </View>
+    <SafeAreaView>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: 50,
+          paddingHorizontal: 20,
+        }}
+      >
+        <Text style={styles.signup}>Inscription</Text>
+        <Text style={styles.details}>
+          Entrez vos informations pour vous inscrire
+        </Text>
+        <View style={{ marginVertical: 20 }}>
+          <Input
+            placeholder="Entrez Votre address Email"
+            iconName="email-outline"
+            label="Email"
+          />
+          <Input
+            placeholder="Entrez Votre Mot de passe"
+            iconName="lock-outline"
+            label="Password"
+          />
+          <Input
+            placeholder="Confirmez votre mot de passe"
+            iconName="lock-outline"
+            label="Password"
+          />
+          <Input
+            placeholder="Entrer un nom d'utilisateur"
+            iconName="account-outline"
+            label="Fullname"
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   input: {
     height: 40,
@@ -67,41 +80,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  textinput: {
+    flex: 1,
+    justifyContent: "center",
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
+  signup: {
+    fontSize: 40,
     fontWeight: "bold",
-    textAlign: "center",
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
+  details: {
+    fontSize: 18,
+    marginVertical: 10,
   },
 });
 
-export default Login;
+export default Sign;

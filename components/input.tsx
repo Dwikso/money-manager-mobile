@@ -8,16 +8,11 @@ type InputProps = {
   iconName: string;
   error: string;
   password: string;
-  placeholder: string;
 };
 
-const Input: React.FunctionComponent<InputProps> = (
-  props,
-  onFocus = () => {}
-) => {
-  const { label, iconName, error, password } = props;
+const Input: React.FunctionComponent<InputProps> = (props) => {
+  const { label, iconName, error, password = () => {} } = props;
   const [isFocused, setIsFocused] = React.useState(false);
-  const [hidePassword, setHidePassword] = React.useState(password);
   return (
     <View style={{ marginBottom: 20 }}>
       <Text style={styles.label}>{label}</Text>
@@ -29,10 +24,8 @@ const Input: React.FunctionComponent<InputProps> = (
       >
         <Icon name={iconName} style={styles.icons} />
         <TextInput
-          secureTextEntry={hidePassword}
           autoCorrect={false}
           onFocus={() => {
-            onFocus();
             setIsFocused(true);
           }}
           onBlur={() => {

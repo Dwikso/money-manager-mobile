@@ -1,18 +1,24 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { FIREBASE_AUTH } from "../../config/firebase";
 import Input from "../input";
 
-const Sign = () => {
+const Login = () => {
   const [email, onChangeEmail] = React.useState("");
   const [name, onChangeName] = React.useState("");
   const [password, onChangePassword] = React.useState("");
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
-  const login = async () => {
+  const connection = async () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
@@ -34,9 +40,9 @@ const Sign = () => {
           paddingHorizontal: 20,
         }}
       >
-        <Text style={styles.signup}>Inscription</Text>
+        <Text style={styles.signup}>Connection</Text>
         <Text style={styles.details}>
-          Entrez vos informations pour vous inscrire
+          Entrez vos informations pour vous connectez
         </Text>
         <View style={{ marginVertical: 20 }}>
           <Input
@@ -49,6 +55,24 @@ const Sign = () => {
             iconName="lock-outline"
             label="Password"
           />
+          <TouchableOpacity
+            onPress={connection}
+            activeOpacity={0.7}
+            style={{
+              height: 55,
+              width: "100%",
+              backgroundColor: "#5D5FEE",
+              marginVertical: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{ color: "#FFFFFF", fontWeight: "bold", fontSize: 18 }}
+            >
+              Connection
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -80,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Sign;
+export default Login;
